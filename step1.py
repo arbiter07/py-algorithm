@@ -1,3 +1,31 @@
-test_list = ['one', 'two', 'three'] 
-for i in test_list: 
-  print(i)
+x = ['Tick', 'Tock', 'Song']
+y = ['Ping', 'Pong']
+x.append(y)
+print('x:', x)
+
+x = ['Tick', 'Tock', 'Song']
+y = ['Ping', 'Pong']
+x.extend(y)
+print('x:', x)
+
+
+x = ['Tick', 'Tock', 'Song']
+y = [['Ping', 'Pong']]
+x.append(y)
+print('x:', x)
+
+x = ['Tick', 'Tock', 'Song']
+y = [['Ping', 'Pong']]
+x.extend(y)
+print('x:', x)
+
+
+x = ['Tick', 'Tock', 'Song']
+y = 'Ping'
+x.append(y)
+print('x:', x)
+
+x = ['Tick', 'Tock', 'Song']
+y = 'Ping'
+x.extend(y)
+print('x:', x)
