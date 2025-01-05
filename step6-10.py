@@ -46,3 +46,38 @@ def checkLocation(nx,ny):
 # dirs = 'ULURRDLLU'
 dirs = 'ULURRDLLU'
 print(solution_7(dirs))
+
+# 8 괄호 짝 맞추기
+def solution_8(s):
+  stack = []
+  for c in s:
+    if c == '(':
+      stack.append(c)
+    elif c == ')':
+      if not stack:
+        return False
+      else:
+        stack.pop()
+  
+  if stack:
+    return False
+  return True
+
+# s = "(())()"
+s = "((())()"
+print(solution_8(s))
+
+# 9 10진수를 2진수로 변환하기
+def solution_9(decimal):
+  
+  binary = []
+  while decimal > 0:
+    binary.append(str(decimal % 2))
+    decimal = decimal // 2 
+    
+  binaryStr = ""
+  while binary:
+    binaryStr += binary.pop()
+  return binaryStr
+
+print(solution_9(decimal=13))
