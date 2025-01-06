@@ -3,20 +3,16 @@ def solution_6(N, stages):
     ret = [0] * N
     total = len(stages)
     
-    for i in range(1, N + 1):  # 스테이지 번호는 1부터 시작
+    for i in range(1, N + 1):
         stage_total = total
         fail_count = 0
-
-        # 실패한 스테이지 계산
         fail_count = stages.count(i)
         print('i', i, 'fail_count : ', fail_count, ' stage_total : ', stage_total)
-        # 현재 스테이지에 도달한 플레이어 수
         if stage_total > 0:
             ret[i - 1] = fail_count / stage_total
         else:
-            ret[i - 1] = 0  # 도달한 플레이어가 없으면 실패율 0
+            ret[i - 1] = 0
         
-        # 현재 스테이지에 있는 플레이어 제외 (다음 스테이지로)
         total -= fail_count
 
     return ret
@@ -81,3 +77,33 @@ def solution_9(decimal):
   return binaryStr
 
 print(solution_9(decimal=13))
+
+# 10 괄호 회전하기
+def solution_10(s):
+  ret = 0  
+  for _ in enumerate(s):
+    if isValid(s):
+      ret += 1
+    s = s[1:] + s[:1]
+  return ret 
+
+def isValid(s):
+  stack = []
+  for c in s:
+    if c == '(' or c == '{' or c == '[':
+      stack.append(c)
+    else:
+      if not stack:
+        return False
+      
+      if (c == ')' and stack[-1] == '('):
+        stack_c = stack.pop()
+      elif (c == ']' and stack[-1] == '['):
+        stack_c = stack.pop()
+      elif (c == '}' and stack[-1] == '{'):
+        stack_c = stack.pop()
+      else:
+        return False
+
+  return not stack
+solution_10(s="[](){}")
