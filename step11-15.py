@@ -61,3 +61,66 @@ board = [
         ]
 moves = [1,5,3,5,1,2,1,4]
 print(solution_13(board, moves))
+
+# 14 표 편집
+def solution_14(n, k, cmds): 
+  ret = "" 
+  deleted = []
+  up = [i-1 for i in range(n+2)]
+  down = [i+1 for i in range(n+1)]
+  # print(up)
+  # print(down)
+  k += 1
+ 
+  for cmd in cmds:
+    if 'C' == cmd:
+      # 삭제
+      deleted.append(k)
+      up[down[k]] = up[k]
+      down[up[k]] = down[k]
+      k = up[k] if n < down[k] else down[k]
+    elif 'Z' == cmd:
+      # restore
+      restore = deleted.pop()
+      down[up[restore]] = restore
+      up[down[restore]] = restore
+    else:
+      action, num = cmd.split()
+      if action == 'U':
+        # 위로
+        for _ in range(int(num)):
+          k = up[k]
+      elif action == 'D':
+        # 아래로
+        for _ in range(int(num)):
+          k = down[k]
+    print(up)
+    print(down)
+    print()
+
+  answer = ["O"] * n 
+  for i in deleted:
+    answer[i-1] = 'X'
+  return "".join(answer)
+           
+n = 8
+k = 2
+#cmds = ["C"]
+cmds = ["D 2","C","U 3","C","D 4","C","U 2","Z","Z"]
+print(solution_14(n, k, cmds))
+
+# 15 요새푸스 문제
+def solution_15(N, K):
+
+  q = [i for i in range(1,N+1)]
+  while len(q) > 1:
+    for i in range(K): 
+      pop = q.pop(0)
+      if K != i+1:
+        q.append(pop)
+
+  return q
+
+N = 5
+K = 2
+print(solution_15(N, K))

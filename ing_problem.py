@@ -1,7 +1,8 @@
-# 14 표 편집
-def solution_14(): 
-  ret = 0
-  return ret
-           
+# 16 기능 개발
 
-print(solution_14())
+def solution_16(progresses, speeds):
+  return progresses,speeds
+
+progresses = [93,30,55]
+speeds = [1,30,5]
+print(solution_16(progresses, speeds))
