@@ -1,8 +1,6 @@
-# 16 기능 개발
+# 18 
+def solution_18():
 
-def solution_16(progresses, speeds):
-  return progresses,speeds
+  return 0
 
-progresses = [93,30,55]
-speeds = [1,30,5]
-print(solution_16(progresses, speeds))
+print(solution_18())
