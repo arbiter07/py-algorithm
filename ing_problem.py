@@ -1,8 +1,9 @@
-# 18 두 개의 수로 특정값 만들기
-def solution_18():
-  
-  return 0
+# 20 완주하지 못한 선수
+def solution_20(participant, completion):
+  result = []
 
-arr = [1,2,3,4,8]
-target = 6
-print(solution_18(arr, target))
+  return result
+
+participant = ["leo", "kiki", "eden"]
+completion = ["eden", "kiki"]
+print(solution_20(participant, completion)) # leo

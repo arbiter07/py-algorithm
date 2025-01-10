@@ -52,3 +52,64 @@ cards1 = ["i", "drink", "water"]
 cards2 = ["want", "to"]
 goal = ["i", "want", "to", "drink", "water"]
 print(solution_17(cards1, cards2, goal))
+
+# 18 두 개의 수로 특정값 만들기
+def count_sort(arr, k):
+  hashtable = [0] * (k+1)
+  
+  for num in arr:
+    if num<=k:
+      hashtable[num] = 1
+  return hashtable
+  
+
+def solution_18(arr, target):
+
+  hashtable = count_sort(arr, target)
+  print(hashtable)
+
+  for num in arr:
+    complement = target - num
+    if(
+      complement is not num
+      and complement > 0 
+      and complement <= target
+      and hashtable[complement] == 1
+    ):
+      return True  
+  return False
+
+arr = [1,2,3,4,8]
+target = 6
+print(solution_18(arr, target))
+
+# 19 문자열 해싱을 이용한 검색 함수 만들기
+def polynomial_hash(str):
+  p = 31 
+  m = 1_000_000_007
+  hash_value = 0
+  for char in str:
+    hash_value = (hash_value * p + ord(char)) % m
+  return hash_value
+
+def solution_19(string_list, query_list):
+  p = 31 
+  m = 1_000_000_007
+
+  hash_list = [polynomial_hash(str) for str in string_list]
+  print(hash_list)
+  
+  result = []
+
+  for query in query_list:
+    query_hash = polynomial_hash(query)
+    if query_hash in hash_list:
+      result.append(True)
+    else:
+      result.append(False)
+
+  return result
+
+string_list = ["apple", "banana", "cherry"]
+query_list = ["banana", "kiwi", "melon", "apple"]
+print(solution_19(string_list, query_list))
