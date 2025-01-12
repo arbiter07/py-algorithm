@@ -113,3 +113,26 @@ def solution_19(string_list, query_list):
 string_list = ["apple", "banana", "cherry"]
 query_list = ["banana", "kiwi", "melon", "apple"]
 print(solution_19(string_list, query_list))
+
+# 20 완주하지 못한 선수
+def solution_20(participant, completion):
+
+  dic = {}
+  for p in participant:
+      if p in dic.keys():
+         dic[p] += 1
+      else:
+        dic[p] = 1
+  for c in completion:
+      dic[c] -= 1
+  
+  print(dic)
+  for key in dic.keys():
+     if dic[key] > 0:
+        return key
+
+  return ""
+
+participant = ["mislav", "stanko", "mislav", "ana"]
+completion = ["stanko", "ana", "mislav"]
+print(solution_20(participant, completion)) # leo
