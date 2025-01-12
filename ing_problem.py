@@ -1,8 +1,13 @@
-# 22 오픈채팅방
-def solution_22(record):
+# 23 베스트 앨범
+def solution_23(genres, plays):
+  result = []
+  
+  genresDic = {}
+  
   
 
-  return ""
+  return result
 
-record = ["Enter uid1234 Muzi", "Enter uid4567 Prodo","Leave uid1234","Enter uid1234 Prodo","Change uid4567 Ryan"]
-print(solution_22(record))
+genres = ["classic", "pop", "classic", "classic", "pop"]
+plays = [500, 600, 150, 800, 2500]
+print(solution_23(genres, plays)) # 4,1,3,0
