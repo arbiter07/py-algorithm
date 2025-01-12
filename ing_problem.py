@@ -1,9 +1,8 @@
-# 21 할인 행사
-def solution_21(want, number):
- 
+# 22 오픈채팅방
+def solution_22(record):
+  
 
   return ""
 
-want = ["banana", "apple", "rice", "pork" , "pot"]
-number = [3,2,2,2,1]
-print(solution_21(want, number)) # leo
+record = ["Enter uid1234 Muzi", "Enter uid4567 Prodo","Leave uid1234","Enter uid1234 Prodo","Change uid4567 Ryan"]
+print(solution_22(record))
