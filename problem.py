@@ -1,8 +1,8 @@
-# 26 
-def solution_26():
+# 30 미로 탈출
+def solution_30(maps):
   result = []
 
   return result
 
-
-print(solution_26()) 
+maps = []
+print(solution_30(maps))
