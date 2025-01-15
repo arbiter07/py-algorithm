@@ -4,5 +4,11 @@ def solution_30(maps):
 
   return result
 
-maps = []
-print(solution_30(maps))
+maps = [
+        "SOOOL",
+        "XXXXO",
+        "OOOOO",
+        "OXXXX",
+        "OOOOE"
+       ]
+print(solution_30(maps)) # 16
