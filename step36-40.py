@@ -9,5 +9,3 @@ def solution_36(phone_book):
     return True
 phone_book = ["119", "97674223", "1195524421"]
 print(solution_36(phone_book))  # false
-
-
