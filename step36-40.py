@@ -55,3 +55,63 @@ def solution_37(n, costs):
 n = 4
 costs = [[0, 1, 1], [0, 2, 2], [1, 2, 5], [1, 3, 1], [2, 3, 8]]
 print(solution_37(n, costs))  # 4
+
+# 38 깊이 우선 탐색 순회
+def solution_38(graph, start):
+    array = [[0 for _ in range(24)] for _ in range(24)]
+    visited = set()
+    result = []
+    for a, b in graph:
+        a = ord(a) - 65
+        b = ord(b) - 65
+        array[a][b] = 1
+        array[b][a] = 1
+    
+    def dfs(graph, start):
+        visited.add(start)
+        result.append(chr(start + 65))
+        for i, obj in enumerate(array[start]):
+            if obj and i not in visited:
+                dfs(graph, i)
+            
+    dfs(graph , ord(start) - 65)
+
+    return result
+
+graph = [ ['A', 'B'], ['A', 'C'], ['B', 'D'], ['B', 'E'], ['C', 'F'], ['E', 'F']  ]
+start = 'A'
+
+print(solution_38(graph, start))
+
+# 39 너비 우선 탐색 조회
+def solution_39(graph, start):
+  array = [[0 for _ in range(101)] for _ in range(101)]
+  result = []
+  visited = set()
+  for a, b in graph:
+    array[a][b] = 1
+    array[b][a] = 1
+    
+  def bfs(graph, q):
+    while q:
+      node = q.pop(0)
+      print(node)
+      for idx in range(len(array[node])):
+        if idx not in visited and array[node][idx] == 1:
+          visited.add(idx)
+          result.append(idx)
+          q.append(idx) 
+  
+  q = [start]
+  visited.add(start)
+  result.append(start)
+  bfs(graph, q)
+
+  return result
+
+#graph = [ (1,2), (1,3), (2,4), (2,5), (3,6), (3,7), (4,8), (5,8), (6,9), (7,9) ]
+graph = [ (0,1), (1,2), (2,3), (3,4), (4,5), (5,0)]
+start = 1
+
+print(solution_39(graph, start)) # 1 2 3 4 5 6 7 8 9 
+ 
