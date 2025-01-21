@@ -1,14 +1,8 @@
-# 40 다익스트라
-def solution_40(graph, start):
+# 42 게임 맵 최단거리
+def solution_42(graph, start):
   result = []
   return result
 
-graph = {
-  'A' : {'B' : 9, 'C' : 3},
-  'B' : {'A' : 5},
-  'C' : {'B' : 1}
-}
-start = 'A'
 
-print(solution_40(graph, start))
-  
+
+print(solution_42(graph, start))

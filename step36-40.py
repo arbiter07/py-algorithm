@@ -114,4 +114,42 @@ graph = [ (0,1), (1,2), (2,3), (3,4), (4,5), (5,0)]
 start = 1
 
 print(solution_39(graph, start)) # 1 2 3 4 5 6 7 8 9 
+
+# 40 다익스트라
+import heapq
+def solution_40(graph, start):
+  distances = { node : float('inf') for node in graph }
+  distances[start] = 0 # A 초기화
+  q = []
+  heapq.heappush(q, [distances[start], start]) # [ 0 , 'A' ]
+  paths = {start : [start]} # { 'A' : [ 'A' ] }
+
+  while q:
+    curr_distance, curr_node = heapq.heappop(q)
+    print(curr_distance, curr_node)
+    # 방문처리
+    if distances[curr_node] < curr_distance:
+      continue
+    
+    for adjacent_node, weight in graph[curr_node].items():
+      distance = curr_distance + weight
+      if distance < distances[adjacent_node]:
+        distances[adjacent_node] = distance
+        paths[adjacent_node] = paths[curr_node] + [adjacent_node]
+        heapq.heappush(q, [distance, adjacent_node])
+        print(q)
+  sorted_paths = {node: paths[node] for node in sorted(paths)}
+  print(paths)
+
+  return [distances, sorted_paths]
+
+graph = {
+  'A' : {'B' : 9, 'C' : 3},
+  'B' : {'A' : 5},
+  'C' : {'B' : 1}
+}
+start = 'A'
+
+print(solution_40(graph, start))
+
  
