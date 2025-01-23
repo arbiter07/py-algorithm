@@ -92,7 +92,7 @@ def solution_39(graph, start):
     array[a][b] = 1
     array[b][a] = 1
     
-  def bfs(graph, q):
+  def bfs(q):
     while q:
       node = q.pop(0)
       print(node)
@@ -105,7 +105,7 @@ def solution_39(graph, start):
   q = [start]
   visited.add(start)
   result.append(start)
-  bfs(graph, q)
+  bfs(q)
 
   return result
 
