@@ -127,3 +127,51 @@ computers = [
       ]
 print(solution_43_DFS(N, computers)) # 2
 print(solution_43_BFS(N, computers)) # 2
+
+# 44 배달 다익스트라 BFS 최단거리 알고리즘
+from heapq import heappush, heappop
+
+def solution_44(N, load, K):
+  result = 0
+  # 간선 연결 인접그래프
+  graph = [ []  for _ in range(N + 1) ]
+  # 거리 
+  distances = [ float("inf") for _ in range(N+1) ]
+  distances[1] = 0 
+  print(distances)
+
+  for a, b, cost in load:
+    graph[a].append((b,cost))
+    graph[b].append((a,cost))
+  
+  heap = []
+  # 거리, 노드
+  heappush(heap, (0, 1))
+  while heap:
+    dist, node = heappop(heap)
+    
+    for next_node , next_dist in graph[node]:
+      cost = dist + next_dist
+      if distances[next_node] > cost:
+        distances[next_node] = cost
+        heappush(heap, (cost ,next_node))
+
+  for i, v in enumerate(distances):
+    if v <= K:
+      result += 1
+
+  return result
+
+N = 5
+K = 3 
+load = [
+         [1,2,1]
+        ,[2,3,3]
+        ,[5,2,2]
+        ,[1,4,2]
+        ,[5,3,1]
+        ,[5,4,2]
+      ]
+print(solution_44(N, load, K)) # 
+
+# 45
