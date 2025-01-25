@@ -137,24 +137,24 @@ def solution_44(N, load, K):
   graph = [ []  for _ in range(N + 1) ]
   # 거리 
   distances = [ float("inf") for _ in range(N+1) ]
-  distances[1] = 0 
-  print(distances)
-
-  for a, b, cost in load:
-    graph[a].append((b,cost))
-    graph[b].append((a,cost))
   
-  heap = []
-  # 거리, 노드
-  heappush(heap, (0, 1))
-  while heap:
-    dist, node = heappop(heap)
-    
-    for next_node , next_dist in graph[node]:
-      cost = dist + next_dist
-      if distances[next_node] > cost:
-        distances[next_node] = cost
-        heappush(heap, (cost ,next_node))
+  for a, b, cost in load:
+    graph[a].append((cost, b))
+    graph[b].append((cost, a))
+  
+  
+  def bfs(start):
+    heap = [start]
+    distances[start[1]] = start[0]
+    while heap:
+      curr_cost, node = heappop(heap)
+      for next_cost, next_node in graph[node]:
+        cost = curr_cost + next_cost
+        if distances[next_node] > cost:
+          distances[next_node] = cost
+          heappush(heap, (cost ,next_node))
+  
+  bfs((0,1))
 
   for i, v in enumerate(distances):
     if v <= K:
