@@ -79,3 +79,75 @@ wires = [
         ,[7,9]
       ]
 print(solution_46(N, wires)) # 
+
+# 47 백트래킹 기본 1~N 까지의 수를 조합하여 10을 만들기
+def solution_47(N):
+  result = []
+  cnt = [0]
+  def backtrack(sum, selected_nums, start):
+    print(sum, selected_nums)
+    cnt[0] += 1
+    if sum == 10:
+      print(' --',True)
+      result.append(selected_nums)
+      return
+
+    for i in range(start, N+1):
+      if sum + i <= 10:
+        backtrack( sum + i , selected_nums + [i] , i+1 ) 
+  
+  backtrack(0,[],1)
+  print(cnt)
+  return result
+
+N = 5
+print(solution_47(N))
+
+# backtrack(0, [], 1) # sum=0, selected_nums=[]
+
+#   i = 1
+#   backtrack(1, [1], 2) # sum=1, selected_nums=[1]
+  
+#     i = 2
+#     backtrack(3, [1, 2], 3) # sum=3, selected_nums=[1, 2]
+    
+#       i = 3
+#       backtrack(6, [1, 2, 3], 4) # sum=6, selected_nums=[1, 2, 3]
+      
+#         i = 4
+#         backtrack(10, [1, 2, 3, 4], 5) # sum=10, selected_nums=[1, 2, 3, 4]
+#           # sum == 10 -> result.append([1, 2, 3, 4])
+        
+#       i = 5
+#       backtrack(11, [1, 2, 3, 5], 6) # sum=11, invalid -> return
+      
+#     i = 4
+#     backtrack(7, [1, 2, 4], 5) # sum=7, selected_nums=[1, 2, 4]
+    
+#       i = 5
+#       backtrack(12, [1, 2, 4, 5], 6) # sum=12, invalid -> return
+
+#     i = 5
+#     backtrack(8, [1, 2, 5], 6) # sum=8, selected_nums=[1, 2, 5]
+
+#   i = 3
+#   backtrack(4, [1, 3], 4) # sum=4, selected_nums=[1, 3]
+  
+#     i = 4
+#     backtrack(8, [1, 3, 4], 5) # sum=8, selected_nums=[1, 3, 4]
+    
+#     i = 5
+#     backtrack(9, [1, 3, 5], 6) # sum=9, selected_nums=[1, 3, 5]
+
+#   i = 4
+#   backtrack(5, [1, 4], 5) # sum=5, selected_nums=[1, 4]
+
+#     i = 5
+#     backtrack(10, [1, 4, 5], 6) # sum=10, selected_nums=[1, 4, 5]
+#       # sum == 10 -> result.append([1, 4, 5])
+
+#   i = 5
+#   backtrack(6, [1, 5], 6) # sum=6, selected_nums=[1, 5]
+
+# i = 2
+# backtrack(2, [2], 3) # sum=2, selected_nums=[2]

@@ -1,6 +1,6 @@
-# 47 백트래킹 기본
-def solution_47():
-    
-  return 0
+# 48 
+def solution_48():
+  result = []
+  return result
 
-print(solution_47())
+print(solution_48())
