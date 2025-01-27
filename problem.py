@@ -1,6 +1,7 @@
-# 48 
-def solution_48():
-  result = []
-  return result
+# 54 
+def solution_54():
+  
+  return 0
+  
 
-print(solution_48())
+print(solution_54())

@@ -151,3 +151,62 @@ print(solution_47(N))
 
 # i = 2
 # backtrack(2, [2], 3) # sum=2, selected_nums=[2]
+
+# 48
+
+# 49 피로도 
+def solution_49(k, dungeons):
+  visited = [False for _ in range(len(dungeons))]
+
+  def dfs(k, cnt, visited):
+    print(k, cnt, visited)
+    result = cnt
+    for idx, value in enumerate(dungeons):
+      if value[0] <= k and not visited[idx]:
+        visited[idx] = True
+        result = max(result, dfs(k-value[1], cnt + 1, visited))
+        visited[idx] = False
+    return result
+
+  return dfs(k, 0, visited)
+
+k = 80
+# 최소필요도, 소모 피로도
+dungeons = [ [80,20], [50,40], [30,10] ]
+print(solution_49(k, dungeons)) # 3
+
+# 50 N-Queen
+def solution_50(n):
+	
+  def getAns(n, y , width, d1 ,d2):
+    ans = 0
+    # 모든 행을 통과한 경우
+    if y == n:
+      ans += 1
+    else:
+      # 현재 행에서 퀸이 놓일 수 있는 모든 위치를 시도
+      for i in range(n):
+        # 대각선이나 해당열에 놓을 수 없는경우
+        print('i , y , n', i , y, n)
+        if width[i] or d1[i + y] or d2[i - y + n]:
+          continue
+        width[i] = d1[i + y] = d2[i - y + n] = True
+        ans += getAns(n, y+1, width, d1, d2)
+        width[i] = d1[i + y] = d2[i - y + n] = False
+    return ans
+
+  ans = getAns(
+          n
+          , 0
+          , [False] * n # 열
+          , [False] * (n* 2 ) # 대각선 1
+          , [False] * (n* 2 ) # 대각선 2
+        )
+  return ans
+n = 4
+print(solution_50(n)) # 2
+
+  # (0,0) (0,1) (0,2) (0,3)
+  # (1,0) (1,1) (1,2) (1,3)
+  # (2,0) (2,1) (2,2) (2,3)
+  # (3,0) (3,1) (3,2) (3,3)
