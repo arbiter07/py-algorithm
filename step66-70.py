@@ -72,3 +72,29 @@ def solution_69(keyinput, board):
 keyinput = ["down","down","down","down","down"]
 board = [7,9]
 print(solution_69(keyinput, board))  # 0,-4
+
+# 70 LCS 계산하기
+def solution_70(str1: str, str2: str):
+  
+  m = len(str1)
+  n = len(str2)
+
+  dp = [ [0] * (n + 1) for _ in range(m+1) ]
+  
+
+  for i in range(1, m+1):
+    for j in range(1, n+1):
+      if str1[i-1] == str2[j-1]:
+        dp[i][j] = dp[i-1][j-1] + 1
+      else:
+        dp[i][j] = max(dp[i-1][j], dp[i][j-1])
+
+  for i in range(len(dp)):
+    print(dp[i])
+    
+  return dp[m][n]
+s1 = "ABCBDAB"
+s2 = "BDCAB"
+print(solution_70(s1,s2)) # 4 
+
+
