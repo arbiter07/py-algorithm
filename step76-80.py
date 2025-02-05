@@ -14,7 +14,7 @@ print(solution_76(land))
 # 77 도둑질
 def solution_77(money):
     if len(money) == 1:
-        return money[0]
+      return money[0]
     
     # 첫 번째 집을 털수도 있는 경우 (마지막 집 제외)
     dp1 = [0] * len(money)
@@ -30,7 +30,7 @@ def solution_77(money):
     dp2[1] = money[1]
     
     for i in range(2, len(money)):
-        dp2[i] = max(dp2[i - 1], dp2[i - 2] + money[i])
+      dp2[i] = max(dp2[i - 1], dp2[i - 2] + money[i])
     
     
     print(dp1)
@@ -50,17 +50,17 @@ def solution_78(board):
 
   for i in range(1, row):
     for j in range(1, col):
-       if board[i][j] == 1:
-          board[i][j] = min(
-             board[i-1][j]
-             ,board[i][j-1]
-             ,board[i-1][j-1]
-          ) + 1
+      if board[i][j] == 1:
+        board[i][j] = min(
+          board[i-1][j]
+          ,board[i][j-1]
+          ,board[i-1][j-1]
+        ) + 1
   
   result = 0
   for i in range(row):
     for j in range(col):
-       result = max(board[i][j] , result)
+      result = max(board[i][j] , result)
   return result ** 2
 board = [
      [0,1,1,1]
@@ -71,3 +71,15 @@ board = [
 print(solution_78(board)) # 9
 
 # 79 단어퍼즐 
+
+# 80 최소 코인
+def solution_80(coins, change):
+  count = 0
+  for coin in coins:
+    count += change // coin  # 현재 동전으로 줄 수 있는 개수 추가
+    change %= coin  # 남은 거스름돈 갱신
+  return count
+
+coins = [500, 100, 50, 10]
+change = 1260
+print(solution_80(coins, change))  # 6
