@@ -63,3 +63,40 @@ print(possible_directions(N, (2, 2), (4, 4)))  # ['SE']
 print(possible_directions(N, (1, 1), (5, 1)))  # ['S']
 print(possible_directions(N, (3, 3), (1, 5)))  # ['NE']
 print(possible_directions(N, (2, 2), (3, 4)))  # ['None']
+
+
+from collections import deque
+
+def is_one_letter_diff(word1, word2):
+    """두 단어가 한 글자만 다른지 확인하는 함수"""
+    diff_count = sum([1 for a, b in zip(word1, word2) if a != b])
+    return diff_count == 1
+
+def bfs(begin, target, words):
+    if target not in words:
+        return 0  # target이 words 리스트에 없으면 변환 불가
+    
+    queue = deque([(begin, 0)])  # (현재 단어, 변환 횟수)
+    visited = set()  # 방문한 단어 저장
+
+    while queue:
+        current, steps = queue.popleft()
+        
+        if current == target:
+            return steps  # 목표 단어에 도달하면 변환 횟수 반환
+        
+        for word in words:
+            if word not in visited and is_one_letter_diff(current, word):
+                visited.add(word)
+                queue.append((word, steps + 1))  # 변환 횟수 증가
+
+    return 0  # 변환 불가능할 경우
+
+def wordChange(begin, target, words):
+    return bfs(begin, target, words)
+
+# 예제 실행
+begin = "hit"
+target = "cog"
+words = ["hot", "dot", "dog", "lot", "log", "cog"]
+print(wordChange(begin, target, words))  # 출력: 4
