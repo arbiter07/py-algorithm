@@ -100,3 +100,35 @@ begin = "hit"
 target = "cog"
 words = ["hot", "dot", "dog", "lot", "log", "cog"]
 print(wordChange(begin, target, words))  # 출력: 4
+
+
+import heapq
+def heapqSolution(operations):
+    min_heap = []
+    max_heap = []
+    exist = {}
+
+    for op in operations:
+        if op[0] == "I":  # 삽입
+            num = int(op[2:])
+            heapq.heappush(min_heap, num)  
+            heapq.heappush(max_heap, -num)
+            exist[num] = exist.get(num, 0) + 1  
+
+        elif op == "D 1":  # 최댓값 삭제
+            while max_heap:
+                max_val = -heapq.heappop(max_heap)
+                if exist.get(max_val, 0) > 0:
+                    exist[max_val] -= 1
+                    break  
+
+        elif op == "D -1":  # 최솟값 삭제
+            while min_heap:
+                min_val = heapq.heappop(min_heap)
+                if exist.get(min_val, 0) > 0:
+                    exist[min_val] -= 1
+                    break  
+
+    # 남아 있는 값 찾기
+    valid_numbers = [k for k, v in exist.items() if v > 0]
+    return [max(valid_numbers), min(valid_numbers)] if valid_numbers else [0, 0]
