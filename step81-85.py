@@ -68,6 +68,7 @@ print(solution_84(k, tangerine))
 
 import math
 
+# 85 기지국 건설
 def solution_85(N, stations, W):
   result = 0
   location = 1
