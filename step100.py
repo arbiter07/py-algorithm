@@ -132,3 +132,31 @@ def heapqSolution(operations):
     # 남아 있는 값 찾기
     valid_numbers = [k for k, v in exist.items() if v > 0]
     return [max(valid_numbers), min(valid_numbers)] if valid_numbers else [0, 0]
+
+
+from collections import deque
+
+def farDistanceBFS(n, edge):
+    # 그래프 초기화
+    graph = {i: [] for i in range(1, n + 1)}
+    for a, b in edge:
+        graph[a].append(b)
+        graph[b].append(a)
+
+    # BFS를 위한 큐
+    queue = deque([1])  # 1번 노드에서 시작
+    distances = {1: 0}  # 시작점의 거리 0
+
+    while queue:
+        node = queue.popleft()
+        for neighbor in graph[node]:
+            if neighbor not in distances:  # 방문하지 않은 노드라면
+                distances[neighbor] = distances[node] + 1
+                queue.append(neighbor)
+
+    # 가장 먼 거리 찾기
+    max_distance = max(distances.values())
+    return sum(1 for d in distances.values() if d == max_distance)
+
+# 테스트
+print(farDistanceBFS(6, [[3, 6], [4, 3], [3, 2], [1, 3], [1, 2], [2, 4], [5, 2]]))  # 출력: 3
