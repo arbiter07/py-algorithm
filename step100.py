@@ -160,3 +160,45 @@ def farDistanceBFS(n, edge):
 
 # 테스트
 print(farDistanceBFS(6, [[3, 6], [4, 3], [3, 2], [1, 3], [1, 2], [2, 4], [5, 2]]))  # 출력: 3
+
+import heapq
+
+def heapq_solution(operations):
+    min_heap = []
+    max_heap = []
+    visited = {}
+
+    for op in operations:
+        cmd, num = op.split()
+        num = int(num)
+
+        if cmd == "I":
+            heapq.heappush(min_heap, num)
+            heapq.heappush(max_heap, -num)
+            visited[num] = visited.get(num, 0) + 1
+        elif cmd == "D":
+            if num == 1:
+                while max_heap and visited.get(-max_heap[0], 0) == 0:
+                    heapq.heappop(max_heap)
+                if max_heap:
+                    value = -heapq.heappop(max_heap)
+                    visited[value] -= 1
+            else:
+                while min_heap and visited.get(min_heap[0], 0) == 0:
+                    heapq.heappop(min_heap)
+                if min_heap:
+                    value = heapq.heappop(min_heap)
+                    visited[value] -= 1
+
+    while min_heap and visited.get(min_heap[0], 0) == 0:
+        heapq.heappop(min_heap)
+    while max_heap and visited.get(-max_heap[0], 0) == 0:
+        heapq.heappop(max_heap)
+
+    if min_heap and max_heap:
+        return [-max_heap[0], min_heap[0]]
+    return [0, 0]
+
+# 테스트 실행
+operations = ["I 16", "I -5643", "D -1", "D 1", "D 1"]
+print(heapq_solution(operations))  # [0, 0]
