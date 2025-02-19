@@ -1,55 +1,21 @@
-def solution_46(N, wires):
+def dp_xy():
+  # 테스트 데이터 (입력 없이 실행 가능)
+  n = 3  # 행렬 개수
+  matrices = [(5, 3), (3, 2), (2, 6)]  # 행렬 크기 리스트
 
-  graph_list = [ [] for _ in range(N + 1) ]
-  for x, y in wires:
-    graph_list[x].append(y)
-    graph_list[y].append(x)
+  # DP 테이블 초기화
+  dp = [[0] * n for _ in range(n)]
 
+  # DP 계산 (부분 행렬의 길이 2 이상)
+  for length in range(2, n + 1):  # 부분 길이
+      for i in range(n - length + 1):
+          j = i + length - 1
+          dp[i][j] = float('inf')  # 최소값을 찾기 위해 초기화
+          for k in range(i, j):
+              cost = dp[i][k] + dp[k+1][j] + matrices[i][0] * matrices[k][1] * matrices[j][1]
+              dp[i][j] = min(dp[i][j], cost)
 
-  min = float("inf")
-  for x,y in wires:
-    graph_list[x].remove(y)
-    graph_list[y].remove(x) 
+  return dp[0][n-1]
 
-    visited = [0] * (N+1)
-
-    cnt = bfs(1, visited, graph_list)
-    diffcnt = N-cnt
-    
-    if min > abs(diffcnt - cnt):
-      min = abs(diffcnt - cnt)
-
-    graph_list[x].append(y)
-    graph_list[y].append(x) 
-
-    
-  return min
-
-def bfs(start, visited, graph_list):
-  cnt = 1 
-  visited[start] = 1
-  q = [start]
-
-  while q:
-    node = q.pop()
-    for next in graph_list[node]:
-      if not visited[next]:
-        visited[next] = 1
-        q.append(next)
-        cnt += 1
-
-
-  return cnt
-
-N = 9
-wires = [
-         [1,3]
-        ,[2,3]
-        ,[3,4]
-        ,[4,5]
-        ,[4,6]
-        ,[4,7]
-        ,[7,8]
-        ,[7,9]
-      ]
-print(solution_46(N, wires)) # 
+# 최소 연산 횟수 출력
+print(dp_xy())  # 결과: 90
