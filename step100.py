@@ -224,3 +224,22 @@ def dp_xy():
 
 # 최소 연산 횟수 출력
 print(dp_xy())  # 결과: 90
+
+
+def LIS():
+    # 테스트 데이터 (입력 없이 실행 가능)
+    arr = [10, 20, 10, 30, 20, 50]  # 주어진 수열
+    n = len(arr)
+
+    # DP 테이블 초기화
+    dp = [1] * n
+
+    # LIS 계산
+    for i in range(n):
+        for j in range(i):
+            if arr[j] < arr[i]:  # 증가하는 수열인지 확인
+                dp[i] = max(dp[i], dp[j] + 1)
+
+    return max(dp)  # 가장 긴 증가하는 부분 수열의 길이
+
+print(LIS())  # 출력: 4
