@@ -243,3 +243,30 @@ def LIS():
     return max(dp)  # 가장 긴 증가하는 부분 수열의 길이
 
 print(LIS())  # 출력: 4
+
+from collections import deque
+
+def solution():
+    N, K = 5, 17  # 예제 입력
+
+    MAX = 100000
+    visited = [-1] * (MAX + 1)
+    queue = deque([N])
+    visited[N] = 0
+
+    while queue:
+        x = queue.popleft()
+
+        if x == K:
+            return visited[x]  # 최소 시간 반환
+
+        for nx in [x * 2, x - 1, x + 1]:
+            if 0 <= nx <= MAX and visited[nx] == -1:
+                if nx == x * 2:  # 순간이동 (0초)
+                    queue.appendleft(nx)
+                    visited[nx] = visited[x]
+                else:  # +1 또는 -1 (1초)
+                    queue.append(nx)
+                    visited[nx] = visited[x] + 1
+
+print(solution())  # 2
