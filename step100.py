@@ -246,7 +246,7 @@ print(LIS())  # 출력: 4
 
 from collections import deque
 
-def solution():
+def bj_13549():
     N, K = 5, 17  # 예제 입력
 
     MAX = 100000
@@ -269,4 +269,4 @@ def solution():
                     queue.append(nx)
                     visited[nx] = visited[x] + 1
 
-print(solution())  # 2
+print(bj_13549())  # 2
