@@ -270,3 +270,36 @@ def bj_13549():
                     visited[nx] = visited[x] + 1
 
 print(bj_13549())  # 2
+
+import sys
+import heapq
+
+def bj_11000():
+    N = int(sys.stdin.readline().strip())
+    lectures = [tuple(map(int, sys.stdin.readline().split())) for _ in range(N)]
+
+    # 강의 시작 시간 기준 정렬
+    lectures.sort()
+
+    # 우선순위 큐(힙) 생성
+    min_heap = []
+    heapq.heappush(min_heap, lectures[0][1])  # 첫 강의의 종료 시간 추가
+
+    for i in range(1, N):
+        start, end = lectures[i]
+
+        # 가장 빨리 끝나는 강의실을 재사용할 수 있다면 갱신
+        if min_heap[0] <= start:
+            heapq.heappop(min_heap)  # 사용된 강의실 제거
+
+        heapq.heappush(min_heap, end)  # 현재 강의 종료 시간 추가
+
+    return len(min_heap)  # 사용된 강의실 개수 출력
+
+# 입력 예시
+# 3
+# 1 3
+# 2 4
+# 3 5
+print(bj_11000())
+
