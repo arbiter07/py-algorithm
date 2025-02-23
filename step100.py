@@ -303,3 +303,28 @@ def bj_11000():
 # 3 5
 print(bj_11000())
 
+def bj_11049(N, matrices):
+    # DP 테이블 초기화 (N x N 크기, 큰 값으로 설정)
+    dp = [[float('inf')] * N for _ in range(N)]
+
+    # 행렬 곱셈 연산의 최소 비용 구하기
+    for i in range(N):
+        dp[i][i] = 0  # 같은 행렬을 곱할 때 연산 필요 없음
+
+    for length in range(1, N):  # 행렬 체인의 길이
+        for i in range(N - length):
+            j = i + length
+            for k in range(i, j):
+                cost = dp[i][k] + dp[k + 1][j] + matrices[i][0] * matrices[k][1] * matrices[j][1]
+                dp[i][j] = min(dp[i][j], cost)
+
+    return dp[0][N - 1]  # 전체 행렬 곱셈 최소 연산 횟수
+
+# 예제 입력
+N = 3
+matrices = [[5, 3], [3, 2], [2, 6]]
+
+# 함수 호출 및 출력
+print(bj_11049(N, matrices))  # 90
+
+
