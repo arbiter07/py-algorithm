@@ -39,3 +39,44 @@ W = [
 
 # 함수 호출 및 출력
 print(bj_2098(N, W))  # 35
+
+from collections import deque
+
+def tomato_3d(M, N, H, box):
+    directions = [(1, 0, 0), (-1, 0, 0), (0, 1, 0), (0, -1, 0), (0, 0, 1), (0, 0, -1)]
+    queue = deque()
+    total_tomatoes, ripe_tomatoes = 0, 0
+
+    # 초기 상태 확인 (익은 토마토 찾기)
+    for h in range(H):
+        for n in range(N):
+            for m in range(M):
+                if box[h][n][m] == 1:
+                    queue.append((h, n, m, 0))  # (층, 행, 열, 날짜)
+                    ripe_tomatoes += 1
+                if box[h][n][m] != -1:
+                    total_tomatoes += 1
+
+    max_days = 0
+
+    # BFS 탐색
+    while queue:
+        h, n, m, days = queue.popleft()
+        max_days = max(max_days, days)
+
+        for dh, dn, dm in directions:
+            nh, nn, nm = h + dh, n + dn, m + dn
+            if 0 <= nh < H and 0 <= nn < N and 0 <= nm < M and box[nh][nn][nm] == 0:
+                box[nh][nn][nm] = 1
+                queue.append((nh, nn, nm, days + 1))
+                ripe_tomatoes += 1
+
+    return max_days if ripe_tomatoes == total_tomatoes else -1
+
+# 예제 실행
+M, N, H = 5, 3, 2
+box = [
+    [[0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]],
+    [[0, 0, 0, 0, 0], [0, 0, 1, 0, 0], [0, 0, 0, 0, 0]]
+]
+print(tomato_3d(M, N, H, box))  # 예상 출력: 4
