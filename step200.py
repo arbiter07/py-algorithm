@@ -99,3 +99,16 @@ def count_ways(n: int) -> int:
 
 # 예제 실행
 print(count_ways(4))  # 7
+
+def bj_11053(n: int, arr: list) -> int:
+    dp = [1] * n  # 모든 dp[i]를 1로 초기화
+
+    for i in range(n):
+        for j in range(i):
+            if arr[j] < arr[i]:  # 증가하는 경우
+                dp[i] = max(dp[i], dp[j] + 1)
+
+    return max(dp)  # 가장 긴 부분 수열의 길이 반환
+
+# 예제 실행
+print(bj_11053(6, [10, 20, 10, 30, 20, 50]))  # 4
