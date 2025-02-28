@@ -112,3 +112,53 @@ def bj_11053(n: int, arr: list) -> int:
 
 # 예제 실행
 print(bj_11053(6, [10, 20, 10, 30, 20, 50]))  # 4
+
+def bj_14503(N, M, r, c, d, room):
+    # 방향 벡터 (북, 동, 남, 서)
+    dx = [-1, 0, 1, 0]  # row 이동
+    dy = [0, 1, 0, -1]  # col 이동
+
+    cleaned = 0  # 청소한 칸 개수
+
+    while True:
+        # 현재 위치 청소
+        if room[r][c] == 0:
+            room[r][c] = 2  # 청소 완료
+            cleaned += 1
+
+        # 네 방향 모두 확인
+        found = False
+        for _ in range(4):
+            d = (d - 1) % 4  # 왼쪽 방향으로 회전
+            nx, ny = r + dx[d], c + dy[d]
+
+            if 0 <= nx < N and 0 <= ny < M and room[nx][ny] == 0:
+                r, c = nx, ny  # 이동
+                found = True
+                break
+
+        # 네 방향 모두 청소되어 있거나 벽인 경우
+        if not found:
+            back_dir = (d + 2) % 4  # 뒤쪽 방향
+            br, bc = r + dx[back_dir], c + dy[back_dir]
+
+            if room[br][bc] == 1:  # 뒤쪽이 벽이면 멈춤
+                break
+            else:
+                r, c = br, bc  # 후진
+
+    return cleaned
+
+
+N = 3
+M = 3
+r = 1
+c = 1
+d = 0
+room = [
+    [1, 1, 1],
+    [1, 0, 1],
+    [1, 1, 1]
+]
+
+print(bj_14503(N, M, r, c, d, room))  # 출력: 1
