@@ -162,3 +162,87 @@ room = [
 ]
 
 print(bj_14503(N, M, r, c, d, room))  # 출력: 1
+
+def bj_17144(R, C, T, room):
+    from copy import deepcopy
+
+    # 상, 하, 좌, 우 방향 벡터
+    dx = [-1, 1, 0, 0]
+    dy = [0, 0, -1, 1]
+
+    # 공기청정기 위치 찾기
+    air_cleaner = []
+    for i in range(R):
+        if room[i][0] == -1:
+            air_cleaner.append(i)
+
+    # 미세먼지 확산
+    def spread():
+        new_room = deepcopy(room)
+
+        for x in range(R):
+            for y in range(C):
+                if room[x][y] > 0:
+                    spread_amount = room[x][y] // 5
+                    spread_count = 0
+
+                    for i in range(4):
+                        nx, ny = x + dx[i], y + dy[i]
+                        if 0 <= nx < R and 0 <= ny < C and room[nx][ny] != -1:
+                            new_room[nx][ny] += spread_amount
+                            spread_count += 1
+
+                    new_room[x][y] -= spread_amount * spread_count
+
+        return new_room
+
+    # 공기청정기 작동 (위쪽 / 아래쪽)
+    def operate_air_cleaner():
+        # 위쪽 공기청정기 (반시계 방향 순환)
+        upper = air_cleaner[0]
+        for i in range(upper - 1, 0, -1):
+            room[i][0] = room[i - 1][0]
+        for i in range(C - 1):
+            room[0][i] = room[0][i + 1]
+        for i in range(upper):
+            room[i][C - 1] = room[i + 1][C - 1]
+        for i in range(C - 1, 0, -1):
+            room[upper][i] = room[upper][i - 1]
+        room[upper][1] = 0
+
+        # 아래쪽 공기청정기 (시계 방향 순환)
+        lower = air_cleaner[1]
+        for i in range(lower + 1, R - 1):
+            room[i][0] = room[i + 1][0]
+        for i in range(C - 1):
+            room[R - 1][i] = room[R - 1][i + 1]
+        for i in range(R - 1, lower, -1):
+            room[i][C - 1] = room[i - 1][C - 1]
+        for i in range(C - 1, 0, -1):
+            room[lower][i] = room[lower][i - 1]
+        room[lower][1] = 0
+
+    # T초 동안 시뮬레이션 진행
+    for _ in range(T):
+        room = spread()
+        operate_air_cleaner()
+
+    # 미세먼지 총량 계산
+    return sum(sum(row) for row in room if row[0] != -1)
+
+
+# ✅ 예제 실행
+R = 7
+C = 8
+T = 1
+room = [
+    [0, 0, 0, 0, 0, 0, 0, 9],
+    [0, 0, 0, 0, 0, 0, 3, 0],
+    [-1, 0, 5, 0, 0, 0, 0, 0],
+    [-1, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 15, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0]
+]
+
+print(bj_17144(R, C, T, room))  # 결과 출력
