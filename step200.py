@@ -246,3 +246,51 @@ room = [
 ]
 
 print(bj_17144(R, C, T, room))  # 결과 출력
+
+def robot_vacuum(N, M, r, c, d, room):
+    # 0: 북, 1: 동, 2: 남, 3: 서
+    dx = [-1, 0, 1, 0]
+    dy = [0, 1, 0, -1]
+
+    # 청소한 영역 카운트
+    cleaned_count = 0
+
+    while True:
+        # 1. 현재 위치 청소
+        if room[r][c] == 0:
+            room[r][c] = 2  # 청소 완료
+            cleaned_count += 1
+
+        # 2. 네 방향 탐색
+        found_cleanable = False
+        for _ in range(4):
+            d = (d - 1) % 4  # 반시계 방향 회전
+            nx, ny = r + dx[d], c + dy[d]
+
+            if 0 <= nx < N and 0 <= ny < M and room[nx][ny] == 0:
+                # 청소되지 않은 곳이 있다면 이동
+                r, c = nx, ny
+                found_cleanable = True
+                break
+
+        if not found_cleanable:
+            # 후진
+            back_x, back_y = r - dx[d], c - dy[d]
+            if room[back_x][back_y] == 1:  # 벽이면 종료
+                break
+            r, c = back_x, back_y  # 후진
+
+    return cleaned_count
+
+
+# 입력 예제
+N, M = 3, 3
+r, c, d = 1, 1, 0
+room = [
+    [1, 1, 1],
+    [1, 0, 1],
+    [1, 1, 1]
+]
+
+# 실행
+print(robot_vacuum(N, M, r, c, d, room))  # 출력: 1
