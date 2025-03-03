@@ -294,3 +294,34 @@ room = [
 
 # 실행
 print(robot_vacuum(N, M, r, c, d, room))  # 출력: 1
+
+from collections import deque
+
+def bj_2178(n, m, maze):
+    dx = [-1, 1, 0, 0]  # 상, 하, 좌, 우
+    dy = [0, 0, -1, 1]
+
+    queue = deque([(0, 0)])  # 시작점 (0,0)
+    
+    while queue:
+        x, y = queue.popleft()
+        
+        for i in range(4):  # 네 방향 탐색
+            nx, ny = x + dx[i], y + dy[i]
+            
+            if 0 <= nx < n and 0 <= ny < m and maze[nx][ny] == 1:
+                maze[nx][ny] = maze[x][y] + 1  # 거리 갱신
+                queue.append((nx, ny))
+
+    return maze[n-1][m-1]  # 도착점 (N-1, M-1)의 값이 최소 이동 거리
+
+# 예제 실행
+n, m = 4, 6
+maze = [
+    [1, 0, 1, 1, 1, 1],
+    [1, 0, 1, 0, 1, 0],
+    [1, 0, 1, 0, 1, 1],
+    [1, 1, 1, 0, 1, 1]
+]
+
+print(bj_2178(n, m, maze))  # 15
