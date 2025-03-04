@@ -325,3 +325,25 @@ maze = [
 ]
 
 print(bj_2178(n, m, maze))  # 15
+
+def bj_15649(n, m):
+    result = []
+    visited = [False] * (n + 1)
+
+    def backtrack(sequence):
+        if len(sequence) == m:
+            result.append(" ".join(map(str, sequence)))
+            return
+        
+        for num in range(1, n + 1):
+            if not visited[num]:
+                visited[num] = True
+                backtrack(sequence + [num])
+                visited[num] = False
+
+    backtrack([])
+    return "\n".join(result)
+
+# 예제 실행
+n, m = 3, 2
+print(bj_15649(n, m))
