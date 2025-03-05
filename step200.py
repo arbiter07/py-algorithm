@@ -347,3 +347,40 @@ def bj_15649(n, m):
 # 예제 실행
 n, m = 3, 2
 print(bj_15649(n, m))
+
+def bj_14888(n, numbers, operators):
+    max_value = -float('inf')
+    min_value = float('inf')
+
+    def backtrack(index, current_value):
+        nonlocal max_value, min_value
+        if index == n:
+            max_value = max(max_value, current_value)
+            min_value = min(min_value, current_value)
+            return
+        
+        for i in range(4):
+            if operators[i] > 0:
+                operators[i] -= 1
+                next_value = calculate(current_value, numbers[index], i)
+                backtrack(index + 1, next_value)
+                operators[i] += 1  # 백트래킹 (원상복구)
+
+    def calculate(a, b, operator_type):
+        if operator_type == 0:  # 덧셈
+            return a + b
+        elif operator_type == 1:  # 뺄셈
+            return a - b
+        elif operator_type == 2:  # 곱셈
+            return a * b
+        else:  # 나눗셈 (음수 나눗셈 처리)
+            return int(a / b) if a >= 0 else -(-a // b)
+
+    backtrack(1, numbers[0])
+    return max_value, min_value
+
+# 예제 실행
+n = 2
+numbers = [5, 6]
+operators = [0, 0, 1, 0]  # 덧셈 0개, 뺄셈 0개, 곱셈 1개, 나눗셈 0개
+print(bj_14888(n, numbers, operators))  # (30, 30)
