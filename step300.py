@@ -28,3 +28,28 @@ arr = [-7, -3, -2, 5, 8]
 # 함수 실행 및 결과 출력
 result = count_subsequences(n, s, arr)
 print(result)
+
+from collections import deque
+
+def bj_16953(A, B):
+    queue = deque([(A, 1)])  # (현재 값, 연산 횟수)
+    
+    while queue:
+        current, count = queue.popleft()
+        
+        if current == B:
+            return count  # B에 도달하면 연산 횟수 반환
+        
+        # 2배 연산 수행
+        if current * 2 <= B:
+            queue.append((current * 2, count + 1))
+        
+        # 오른쪽에 1 추가 연산 수행
+        if current * 10 + 1 <= B:
+            queue.append((current * 10 + 1, count + 1))
+    
+    return -1  # B를 만들 수 없는 경우
+
+# 예제 실행
+print(bj_16953(2, 162))  # ➝ 5
+print(bj_16953(4, 42))   # ➝ -1
